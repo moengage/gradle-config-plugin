@@ -38,12 +38,18 @@ testing {
     }
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xexplicit-api=strict")
+    }
+}
+
 gradlePlugin {
     website = "https://github.com/moengage/gradle-config-plugin"
     vcsUrl = "https://github.com/moengage/gradle-config-plugin"
     val androidPluginConfiguration by plugins.creating {
         id = "com.moengage.android.library.config.plugin"
-        implementationClass = "com.moengage.gradle.android.library.plugin.AndroidLibraryConfigPlugin"
+        implementationClass = "com.moengage.gradle.android.library.plugin.AndroidModuleConfigPlugin"
         displayName = project.findProperty("NAME") as String
         description = project.findProperty("DESCRIPTION") as String
     }
