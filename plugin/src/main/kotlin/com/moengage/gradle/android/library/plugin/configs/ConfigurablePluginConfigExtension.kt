@@ -26,15 +26,15 @@ public open class ConfigurablePluginConfigExtension @Inject constructor(
     public val libraryExtension: LibraryExtension
 ) {
 
-    private val pluginConfiguration = objects.newInstance(PluginConfiguration::class.java)
-    private val productFlavorConfiguration =
+    internal val pluginConfiguration = objects.newInstance(PluginConfiguration::class.java)
+    internal val productFlavorConfiguration =
         objects.newInstance(ProductFlavorConfiguration::class.java)
-    private val buildFeatureConfiguration =
+    internal val buildFeatureConfiguration =
         objects.newInstance(BuildFeatureConfiguration::class.java)
-    private val instrumentationRunnerConfiguration =
+    internal val instrumentationRunnerConfiguration =
         objects.newInstance(InstrumentationRunnerConfiguration::class.java)
-    private val buildTypeConfiguration = objects.newInstance(BuildTypeConfiguration::class.java)
-    private val consumerProguardConfiguration =
+    internal val buildTypeConfiguration = objects.newInstance(BuildTypeConfiguration::class.java)
+    internal val consumerProguardConfiguration =
         objects.newInstance(ConsumerProguardConfiguration::class.java)
 
     /**
