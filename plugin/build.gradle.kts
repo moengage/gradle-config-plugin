@@ -57,12 +57,14 @@ gradlePlugin {
             implementationClass = "com.moengage.gradle.android.library.plugin.AndroidModuleConfigPlugin"
             displayName = pluginName
             description = pluginDescription
+            tags = listOf("MoEngage", "Gradle Config")
         }
         register("hybridModuleConfigPlugin") {
             id = "com.moengage.android.hybrid.module.config.plugin"
             implementationClass = "com.moengage.gradle.android.library.plugin.HybridModuleConfigPlugin"
             displayName = pluginName
             description = pluginDescription
+            tags = listOf("MoEngage", "Gradle Config")
         }
     }
 }
@@ -80,10 +82,10 @@ dependencies {
 }
 
 signing {
-    useInMemoryPgpKeys(
-        project.findProperty("signingInMemoryKeyId") as String,
-        project.findProperty("signingInMemoryKey") as String,
-        project.findProperty("signingInMemoryKeyPassword") as String
-    )
+    val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
+    val signingKey = (project.findProperty("signingInMemoryKey") as String).replace("\\n", "\n")
+    val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
+
+    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign(configurations.runtimeElements.get())
 }
