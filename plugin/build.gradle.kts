@@ -47,11 +47,23 @@ kotlin {
 gradlePlugin {
     website = "https://github.com/moengage/gradle-config-plugin"
     vcsUrl = "https://github.com/moengage/gradle-config-plugin"
-    val androidPluginConfiguration by plugins.creating {
-        id = "com.moengage.android.library.config.plugin"
-        implementationClass = "com.moengage.gradle.android.library.plugin.AndroidModuleConfigPlugin"
-        displayName = project.findProperty("NAME") as String
-        description = project.findProperty("DESCRIPTION") as String
+
+    val pluginName = project.findProperty("NAME") as String
+    val pluginDescription = project.findProperty("DESCRIPTION") as String
+
+    plugins {
+        register("androidModuleConfigPlugin") {
+            id = "com.moengage.android.library.config.plugin"
+            implementationClass = "com.moengage.gradle.android.library.plugin.AndroidModuleConfigPlugin"
+            displayName = pluginName
+            description = pluginDescription
+        }
+        register("hybridModuleConfigPlugin") {
+            id = "com.moengage.android.hybrid.module.config.plugin"
+            implementationClass = "com.moengage.gradle.android.library.plugin.HybridModuleConfigPlugin"
+            displayName = pluginName
+            description = pluginDescription
+        }
     }
 }
 

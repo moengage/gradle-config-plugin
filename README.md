@@ -1,28 +1,38 @@
+![Logo](.github/logo.png)
+
 # MoEngage Android Gradle Config Plugin
 
 | Plugin ID | Latest Version |
 |-----------|----------------|
 | `com.moengage.android.library.config.plugin` | [![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/com.moengage.android.library.config.plugin)](https://plugins.gradle.org/plugin/com.moengage.android.library.config.plugin) |
+| `com.moengage.android.hybrid.module.config.plugin` | [![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/com.moengage.android.hybrid.module.config.plugin)](https://plugins.gradle.org/plugin/com.moengage.android.hybrid.module.config.plugin) |
 
 ---
 
 ## 1. Overview
 
-`com.moengage.android.library.config.plugin` is a Gradle plugin for **Android library modules** that standardises:
+`com.moengage.android.library.config.plugin` is a Gradle plugin for **native Android library modules** that standardises:
 
 - Android + Kotlin configuration
 - SDK versions and compile options
 - Lint and test options
 - Default build types
 - Maven publishing
-- Optional plugins (Kotlin serialization, Dokka, release publishing)
 - Product flavours, build features, BuildConfig fields, and instrumentation runner
 
 The goal is to remove duplication across multiple modules and provide a **simple, declarative DSL** so each module only specifies what is different.
 
+`com.moengage.android.hybrid.module.config.plugin` is a Gradle plugin for **hybrid platform Android library modules** (e.g., React Native, Flutter, Cordova wrappers) that provides:
+
+- Android + Kotlin configuration  
+- SDK versions and compile options  
+- Kotlin compiler options (JVM target, explicit API mode)  
+- Product flavours, build features, BuildConfig fields, and instrumentation runner  
+- Consumer proguard rules
+
 ---
 
-## 2. Getting started
+## 2. Getting started (Native Plugin)
 
 ### 2.1. Declare the plugin in your version catalog (recommended)
 
@@ -63,64 +73,122 @@ plugins {
 
 > Note: No `buildscript` classpath entry is required when using the plugins DSL with the version catalog.
 
-The plugin will then apply common static configuration automatically and expose the `moduleConfig.configure` extension for dynamic configuration.
+The plugin will then apply common static configuration automatically and expose the `moduleConfig` extension for dynamic configuration.
 
 ---
 
-## 3. Static configuration (applied automatically)
+## 3. Getting started (Hybrid Plugin)
+
+For hybrid platform modules (React Native, Flutter, Cordova, etc.), apply the hybrid plugin directly in the module-level build file.
+
+<details>
+<summary><code>build.gradle.kts</code> (Kotlin DSL)</summary>
+
+```kotlin
+plugins {
+    id("com.moengage.android.hybrid.module.config.plugin") version "pluginVersion"
+}
+```
+</details>
+
+<details>
+<summary><code>build.gradle</code> (Groovy)</summary>
+
+```groovy
+plugins {
+    id 'com.moengage.android.hybrid.module.config.plugin' version 'pluginVersion'
+}
+```
+</details>
+
+> Replace `pluginVersion` with the latest version from the Gradle Plugin Portal badge above.
+
+The hybrid plugin applies the Android library and Kotlin Android plugins automatically, configures SDK versions and compile options, and exposes the `hybridModuleConfig.configurePlugin` extension for additional configuration.
+
+---
+
+## 4. Static configuration (applied automatically)
 
 When the plugin is applied to an Android library module, it configures the underlying `com.android.library` extension with same defaults.
 
 > You **do not** need to configure these unless you want to override them directly using the `android {}` block.
 
-### 3.1. SDK versions
+### 4.1. SDK versions
+
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✓ |
 
 Configured by `SDKVersionConfiguration`:
 
 - `compileSdk` – set to the compile SDK version
 - `minSdk` – default minimum supported Android version
-- `targetSdk` – target Android version 
+- `targetSdk` – target Android version
 
-### 3.2. Java/Kotlin compile options
+### 4.2. Java/Kotlin compile options
 
-Configured by `CompileOptionConfiguration` and `KotlinOptionConfiguration`:
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✓ |
+
+Configured by `CompileOptionConfiguration`:
 
 - Java source/target compatibility (e.g., `JavaVersion.VERSION_1_8`)
+
+For the **Native Plugin**, `KotlinOptionConfiguration` is also applied statically:
 - Kotlin JVM target aligned with Java version
 - Common Kotlin compiler flags used across SDK modules
 
-### 3.3. Build types
+For the **Hybrid Plugin**, Kotlin options are configurable via the `kotlinOptions` DSL block (see section **6.1**).
+
+### 4.3. Build types
+
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✗ |
 
 Configured by `DebugBuildTypeConfiguration`:
 
 - Ensures a `debug` build type exists
 - Applies common debug settings for test case coverage
 
-Additional build types can be added or customised using dynamic configuration (see section **4.4**).
+Additional build types can be added or customised using dynamic configuration (see section **5.4**).
 
-### 3.4. Lint configuration
+### 4.4. Lint configuration
+
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✗ |
 
 Configured by `LintConfiguration`:
 
 - Common lint options shared across SDK modules (e.g., warnings as errors, baseline handling)
 
-### 3.5. Test options
+### 4.5. Test options
+
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✗ |
 
 Configured by `TestOptionsConfiguration`:
 
 - Standard unit and instrumentation test options
 
-### 3.6. Publishing
+### 4.6. Publishing
+
+| Applies to |
+|------------|
+| Native ✓ · Hybrid ✗ |
 
 Configured by `PublishingConfiguration`:
 
-- Sets up Maven publishing for the library artifact using MoEngage’s internal conventions
+- Sets up Maven publishing for the library artifact using MoEngage's internal conventions
 
 ---
 
-## 4. Dynamic configuration via `nativeModuleConfig`
+## 5. Dynamic configuration via `moduleConfig`
 
-For per-module customisation, use the `nativeModuleConfig` extension provided by the plugin.
+For per-module customisation, use the `moduleConfig` extension provided by the plugin.
 
 ```kotlin
 moduleConfig.configure {
@@ -134,7 +202,7 @@ Below are all available configuration blocks with **default values** and **possi
 
 ---
 
-### 4.1. Optional plugins configuration
+### 5.1. Optional plugins configuration
 
 Controls optional Gradle plugins applied to the module.
 
@@ -171,7 +239,7 @@ moduleConfig.configure {
 
 ---
 
-### 4.2. Product flavour configuration
+### 5.2. Product flavour configuration
 
 Defines flavour dimension and flavours for the Android library.
 
@@ -221,7 +289,7 @@ moduleConfig.configure {
 
 ---
 
-### 4.3. Build features / BuildConfig configuration
+### 5.3. Build features / BuildConfig configuration
 
 Controls whether `BuildConfig` is generated and lets you declare custom `BuildConfig` fields.
 
@@ -252,7 +320,7 @@ moduleConfig.configure {
 
 ---
 
-### 4.4. Build types configuration
+### 5.4. Build types configuration
 
 Configures or creates build types like `release`, `debug`, or custom ones.
 
@@ -289,7 +357,7 @@ Configures or creates build types like `release`, `debug`, or custom ones.
 #### Defaults
 
 - A default `debug` build type is configured by the static configuration.
-- No extra build types are added by `nativeModuleConfig` unless you define them.
+- No extra build types are added by `moduleConfig` unless you define them.
 
 #### Example
 
@@ -319,7 +387,7 @@ moduleConfig.configure {
 
 ---
 
-### 4.5. Instrumentation runner configuration
+### 5.5. Instrumentation runner configuration
 
 Configures the default Android instrumentation test runner.
 
@@ -354,14 +422,65 @@ android {
 
 ---
 
-## 5. Full example
+## 6. Dynamic configuration for Hybrid Plugin via `hybridModuleConfig`
+
+For hybrid platform modules (React Native, Flutter, Cordova wrappers), use the `hybridModuleConfig` extension provided by the hybrid plugin.
+
+```kotlin
+hybridModuleConfig.configurePlugin {
+    // configure plugins, flavours, build features, build types, kotlin options, consumer proguard, instrumentation runner
+}
+```
+
+The hybrid plugin inherits all configuration options from the native plugin (sections 5.1–5.5) and adds the following:
+
+---
+
+### 6.1. Kotlin options configuration
+
+Configures Kotlin compiler options for the module.
+
+- Backed by: `KotlinOptionConfiguration`
+
+#### Properties
+
+- `enableJvmTarget: Property<Boolean>`  
+  - **Default:** `true`  
+  - **When true:** sets the JVM target for the Kotlin compiler  
+  - **Possible values:** `true` or `false`
+
+- `configuredJvmTarget: Property<JvmTarget>`  
+  - **Default:** `JvmTarget.JVM_1_8`  
+  - **Possible values:** Any `JvmTarget` enum value (e.g., `JvmTarget.JVM_11`, `JvmTarget.JVM_17`)
+
+- `compilerArgs: ListProperty<String>`  
+  - **Default:** `listOf("-Xexplicit-api=strict")`  
+  - **Possible values:** Any valid Kotlin compiler arguments
+
+#### Example
+
+```kotlin
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+hybridModuleConfig.configurePlugin {
+    kotlinOptions {
+        enableJvmTarget.set(true)
+        configuredJvmTarget.set(JvmTarget.JVM_11)
+        compilerArgs.set(listOf("-Xexplicit-api=strict", "-opt-in=kotlin.RequiresOptIn"))
+    }
+}
+```
+
+---
+
+## 7. Full example (Native Plugin)
 
 ```kotlin
 plugins {
     id("com.moengage.android.library.config.plugin")
 }
 
-nativeModuleConfig {
+moduleConfig.configure {
     // Include/Exclude plugins 
     plugins {
         kotlinSerializationEnabled.set(true)
@@ -402,6 +521,58 @@ nativeModuleConfig {
     // Exclude Instrumentation runner
     instrumentationRunner {
         useDefaultRunner.set(false)
+    }
+}
+```
+
+---
+
+## 8. Full example (Hybrid Plugin)
+
+```kotlin
+plugins {
+    id("com.moengage.android.hybrid.module.config.plugin")
+}
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.moengage.gradle.android.library.plugin.configs.BuildTypeConfig
+import com.moengage.gradle.android.library.plugin.configs.BuildTypeKind
+import com.moengage.gradle.android.library.plugin.configs.BuildConfigType
+
+hybridModuleConfig.configurePlugin {
+    // Build features / BuildConfig
+    buildFeature {
+        buildConfigField(BuildConfigType.STRING, "SDK_NAME", "\"MoEngageHybridSDK\"")
+    }
+
+    // Build types
+    buildTypes {
+        buildTypes.set(
+            listOf(
+                BuildTypeConfig(
+                    name = "release",
+                    kind = BuildTypeKind.REGISTER,
+                    isMinifyEnabled = false,
+                    isShrinkResources = false,
+                    proguardFiles = listOf(
+                        "proguard-android.txt",
+                        "proguard-rules.pro"
+                    )
+                )
+            )
+        )
+    }
+
+    // Kotlin compiler options (specific to hybrid plugin)
+    kotlinOptions {
+        enableJvmTarget.set(true)
+        configuredJvmTarget.set(JvmTarget.JVM_1_8)
+        compilerArgs.set(listOf("-Xexplicit-api=strict"))
+    }
+    
+    // Instrumentation runner
+    instrumentationRunner {
+        useDefaultRunner.set(true)
     }
 }
 ```
