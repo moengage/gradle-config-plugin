@@ -83,7 +83,7 @@ dependencies {
 
 signing {
     val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
-    val signingKey = (project.findProperty("signingInMemoryKey") as String).replace("\\n", "\n")
+    val signingKey = (project.findProperty("signingInMemoryKey") as String)
     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
 
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
