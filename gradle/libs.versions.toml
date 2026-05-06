@@ -1,11 +1,11 @@
 [versions]
-agp = "8.7.3"
-kotlin = "1.9.23"
+agp = "9.1.1"
+kotlin = "2.3.20"
 
 [libraries]
 android-tools-build-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
-jvm = { id = "org.jetbrains.kotlin.jvm", version = "1.9.23" }
+jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.3.20" }
 plugin-gradle-publish = { id = "com.gradle.plugin-publish", version = "1.2.1" }

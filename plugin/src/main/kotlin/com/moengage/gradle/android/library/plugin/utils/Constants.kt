@@ -20,5 +20,5 @@ internal const val PLUGIN_ID_JACOCO = "jacoco"
 // Defaults
 internal const val DEFAULT_ANDROID_RUNNER = "androidx.test.runner.AndroidJUnitRunner"
 internal const val DEFAULT_PROGUARD_FILE_NAME = "proguard-rules.pro"
-internal const val DEFAULT_ANDROID_PROGUARD_FILE_NAME = "proguard-android.txt"
+internal const val DEFAULT_ANDROID_PROGUARD_FILE_NAME = "proguard-android-optimize.txt"
 internal const val DEFAULT_CONSUMER_PROGUARD_FILE = "proguard.txt"
