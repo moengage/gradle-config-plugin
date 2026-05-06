@@ -15,13 +15,13 @@ testing {
         // Configure the built-in test suite
         val test by getting(JvmTestSuite::class) {
             // Use Kotlin Test test framework
-            useKotlinTest("1.9.23")
+            useKotlinTest("2.3.20")
         }
 
         // Create a new test suite
         val functionalTest by registering(JvmTestSuite::class) {
             // Use Kotlin Test test framework
-            useKotlinTest("1.9.23")
+            useKotlinTest("2.3.20")
 
             dependencies {
                 // functionalTest test suite depends on the production code in tests
@@ -81,11 +81,12 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
 }
 
-signing {
-    val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
-    val signingKey = (project.findProperty("signingInMemoryKey") as String)
-    val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
-
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(configurations.runtimeElements.get())
-}
+// Local publish: signing disabled. Restore before pushing upstream.
+// signing {
+//     val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
+//     val signingKey = (project.findProperty("signingInMemoryKey") as String)
+//     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
+//
+//     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+//     sign(configurations.runtimeElements.get())
+// }
