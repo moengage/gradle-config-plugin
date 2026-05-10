@@ -81,12 +81,11 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
 }
 
-// Local publish: signing disabled. Restore before pushing upstream.
-// signing {
-//     val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
-//     val signingKey = (project.findProperty("signingInMemoryKey") as String)
-//     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
-//
-//     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-//     sign(configurations.runtimeElements.get())
-// }
+ signing {
+     val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
+     val signingKey = (project.findProperty("signingInMemoryKey") as String)
+     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
+
+     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+     sign(configurations.runtimeElements.get())
+ }
