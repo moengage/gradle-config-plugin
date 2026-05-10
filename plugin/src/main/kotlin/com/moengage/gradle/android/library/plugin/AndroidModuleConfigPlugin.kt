@@ -11,7 +11,6 @@ import com.moengage.gradle.android.library.plugin.configuration.static.LintConfi
 import com.moengage.gradle.android.library.plugin.configuration.static.PublishingConfiguration
 import com.moengage.gradle.android.library.plugin.configuration.static.SDKVersionConfiguration
 import com.moengage.gradle.android.library.plugin.configuration.static.TestOptionsConfiguration
-import com.moengage.gradle.android.library.plugin.configuration.static.UnitTestJvmTargetConfiguration
 import com.moengage.gradle.android.library.plugin.utils.PLUGIN_ID_ANDROID_LIBRARY
 
 /**
@@ -35,7 +34,6 @@ public class AndroidModuleConfigPlugin : Plugin<Project> {
         PublishingConfiguration::class,
         SDKVersionConfiguration::class,
         TestOptionsConfiguration::class
-//        UnitTestJvmTargetConfiguration::class
     )
 
     internal companion object {
