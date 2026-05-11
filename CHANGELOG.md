@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [major] MOEN-44438: AGP 9 and Kotlin 2 Upgrade
+
 # 04-06-2026
 
 ## 0.0.5
