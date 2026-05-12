@@ -7,7 +7,6 @@ import com.moengage.gradle.android.library.plugin.configs.HybridConfigurablePlug
 import com.moengage.gradle.android.library.plugin.configuration.static.CompileOptionConfiguration
 import com.moengage.gradle.android.library.plugin.configuration.static.SDKVersionConfiguration
 import com.moengage.gradle.android.library.plugin.utils.PLUGIN_ID_ANDROID_LIBRARY
-import com.moengage.gradle.android.library.plugin.utils.PLUGIN_ID_KOTLIN_ANDROID
 
 /**
  * Gradle plugin that applies a standard Android library configuration for
@@ -58,7 +57,6 @@ public class HybridModuleConfigPlugin : Plugin<Project> {
      */
     override fun apply(project: Project) {
         project.plugins.apply(PLUGIN_ID_ANDROID_LIBRARY)
-        project.plugins.apply(PLUGIN_ID_KOTLIN_ANDROID)
         project.configurePluginConfigExtension()
 
         project.extensions.configure(LibraryExtension::class.java) {

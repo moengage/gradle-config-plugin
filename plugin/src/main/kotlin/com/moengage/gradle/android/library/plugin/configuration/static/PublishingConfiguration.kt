@@ -20,7 +20,7 @@ internal abstract class PublishingConfiguration : StaticConfig {
     ) {
         with(libraryExtension) {
             publishing {
-                singleVariant("release") {
+                singleVariant("defaultRelease") {
                     withSourcesJar()
                 }
             }
