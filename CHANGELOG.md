@@ -1,3 +1,9 @@
+# Release Date
+
+## Release Version
+
+- [patch] Support Grade Config plugin to compile with Java 17 or below
+
 # 07-04-2026
 
 ## 1.0.0
