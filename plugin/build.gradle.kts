@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     `java-gradle-plugin`
     `kotlin-dsl`
@@ -38,8 +40,14 @@ testing {
     }
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 kotlin {
     compilerOptions {
+        jvmTarget = JvmTarget.JVM_11
         freeCompilerArgs.add("-Xexplicit-api=strict")
     }
 }
