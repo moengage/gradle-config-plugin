@@ -7,9 +7,10 @@
 - [major] MOEN-44438: Kotlin updated from `1.9.23` to `2.3.20`
 - [major] MOEN-44438: `org.jetbrains.kotlin.jvm` plugin updated from `1.9.23` to `2.3.20`
 - [major] MOEN-44438: `com.gradle.plugin-publish` updated from `1.2.1` to `2.1.1`
-- [major] MOEN-44438: Test Kotlin version updated from `1.9.23` to `2.3.20`
 - [major] MOEN-44438: Removed application of `org.jetbrains.kotlin.android` from native and hybrid config plugins
 - [major] MOEN-44438: JaCoCo version updated from `0.8.8` to `0.8.14`
+- [major] MOEN-44438: Removed init template unit and functional tests
+- [major] MOEN-44438: Removed `functionalTest` test suite
 
 # 04-06-2026
 
