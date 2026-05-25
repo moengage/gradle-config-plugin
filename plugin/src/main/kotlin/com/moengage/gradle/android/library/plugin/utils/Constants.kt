@@ -3,8 +3,8 @@ package com.moengage.gradle.android.library.plugin.utils
 
 // Build Versions
 internal const val ANDROID_BUILD_CONFIG_MINIMUM_SDK_VERSION = 23
-internal const val ANDROID_BUILD_CONFIG_COMPILE_SDK_VERSION = 35
-internal const val ANDROID_BUILD_CONFIG_TARGET_SDK_VERSION = 35
+internal const val ANDROID_BUILD_CONFIG_COMPILE_SDK_VERSION = 36
+internal const val ANDROID_BUILD_CONFIG_TARGET_SDK_VERSION = 36
 
 // Library Versions
 internal const val JACOCO_VERSION = "0.8.14"
