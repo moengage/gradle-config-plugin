@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.gradle.plugins.signing.Sign
 
 plugins {
     `java-gradle-plugin`
@@ -89,11 +90,20 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
 }
 
-signing {
-    val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
-    val signingKey = (project.findProperty("signingInMemoryKey") as String)
-    val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
+val signingKeyId = project.findProperty("signingInMemoryKeyId") as? String
+val signingKey = project.findProperty("signingInMemoryKey") as? String
+val signingPassword = project.findProperty("signingInMemoryKeyPassword") as? String
 
-    useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(configurations.runtimeElements.get())
+if (!signingKeyId.isNullOrEmpty() && !signingKey.isNullOrEmpty() && !signingPassword.isNullOrEmpty()) {
+    signing {
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+        sign(configurations.runtimeElements.get())
+    }
+}
+
+gradle.taskGraph.whenReady {
+    val shouldSign = allTasks.any { it.name.startsWith("publish") && it.name != "publishPlugins" }
+    tasks.withType<Sign>().configureEach {
+        isEnabled = shouldSign
+    }
 }
