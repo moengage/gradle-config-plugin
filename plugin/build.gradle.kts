@@ -10,6 +10,33 @@ plugins {
 group = project.findProperty("GROUP") as String
 version = project.findProperty("VERSION_NAME") as String
 
+testing {
+    suites {
+        // Configure the built-in test suite
+        val test by getting(JvmTestSuite::class) {
+            // Use Kotlin Test test framework
+            useKotlinTest("1.9.23")
+        }
+
+        // Create a new test suite
+        val functionalTest by registering(JvmTestSuite::class) {
+            // Use Kotlin Test test framework
+            useKotlinTest("1.9.23")
+
+            dependencies {
+                // functionalTest test suite depends on the production code in tests
+                implementation(project())
+            }
+
+            targets {
+                all {
+                    // This test suite should run after the built-in test suite has run its tests
+                    testTask.configure { shouldRunAfter(test) }
+                }
+            }
+        }
+    }
+}
 
 kotlin {
     compilerOptions {
@@ -42,6 +69,13 @@ gradlePlugin {
     }
 }
 
+gradlePlugin.testSourceSets.add(sourceSets["functionalTest"])
+
+tasks.named<Task>("check") {
+    // Include functionalTest as part of the check lifecycle
+    dependsOn(testing.suites.named("functionalTest"))
+}
+
 dependencies {
     compileOnly(libs.android.tools.build.gradle)
     compileOnly(libs.kotlin.gradle.plugin)
@@ -53,5 +87,5 @@ signing {
     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
 
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(configurations.runtimeElements.get())
+    sign(publishing.publications)
 }
