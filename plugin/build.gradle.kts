@@ -31,7 +31,7 @@ testing {
             targets {
                 all {
                     // This test suite should run after the built-in test suite has run its tests
-                    testTask.configure { shouldRunAfter(test) } 
+                    testTask.configure { shouldRunAfter(test) }
                 }
             }
         }
@@ -87,5 +87,5 @@ signing {
     val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
 
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-    sign(configurations.runtimeElements.get())
+    sign(publishing.publications)
 }

@@ -8,9 +8,9 @@ on:
 env:
   publishKey: ${{ secrets.publishKey }}
   secretKey: ${{ secrets.secretKey }}
-  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey }}
-  ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyId }}
-  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyPassword }}
+  ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.signingInMemoryKey }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.signingInMemoryKeyId }}
+  ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.signingInMemoryKeyPassword }}
         
 jobs:
   assemble-verification:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: 19
+          java-version: 17
       - name: Set up gradle cache
         uses: gradle/actions/setup-gradle@v5
         with:
