@@ -1,6 +1,6 @@
-# 04-06-2026
+# Release Date
 
-## 0.0.5
+## Release Version
 
 - Downgrading JDK version to 17 for compatibility with JAVA 17
 
