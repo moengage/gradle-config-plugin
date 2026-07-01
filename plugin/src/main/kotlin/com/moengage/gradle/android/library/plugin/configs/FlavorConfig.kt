@@ -10,6 +10,6 @@ public data class FlavorConfig(
     val name: String,
     /** Optional minSdk value to override for this flavor. */
     val minSdk: Int? = null,
-    /** Optional missingDimensionStrategy pair of (dimension, requestedFlavor). */
-    val missingDimensionStrategy: Pair<String, String>? = null
+    /** Optional matchingFallback  */
+    val matchingFallback: String? = null
 )

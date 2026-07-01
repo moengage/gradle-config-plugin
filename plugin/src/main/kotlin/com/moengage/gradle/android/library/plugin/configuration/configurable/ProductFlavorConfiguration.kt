@@ -27,14 +27,14 @@ public abstract class ProductFlavorConfiguration @Inject constructor(objects: Ob
 
     /**
      * Adds a single flavor configuration with optional [minSdk] and
-     * [missingDimensionStrategy] to the internal list.
+     * [matchingFallback] to the internal list.
      */
     public fun flavor(
         name: String,
         minSdk: Int? = null,
-        missingDimensionStrategy: Pair<String, String>? = null
+        matchingFallback: String? = null
     ) {
-        flavors.add(FlavorConfig(name, minSdk, missingDimensionStrategy))
+        flavors.add(FlavorConfig(name, minSdk, matchingFallback))
     }
 
     init {
@@ -52,9 +52,7 @@ public abstract class ProductFlavorConfiguration @Inject constructor(objects: Ob
                         if (flavorConfig.minSdk != null) {
                             minSdk = flavorConfig.minSdk
                         }
-                        flavorConfig.missingDimensionStrategy?.let {
-                            missingDimensionStrategy(it.first, it.second)
-                        }
+                        flavorConfig.matchingFallback?.let { matchingFallbacks.add(it) }
                     }
                 }
             }
