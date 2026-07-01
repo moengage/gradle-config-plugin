@@ -1,6 +1,6 @@
-# Release Date
+# 01-07-2026
 
-## Release Version
+## 2.0.0
 
 - [major] MOEN-44438: Gradle wrapper updated from `8.9` to `9.3.1`
 - [major] MOEN-44438: `gradle/libs.versions.toml` updates
