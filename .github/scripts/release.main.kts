@@ -29,13 +29,13 @@ val date = dateFormat.format(Date())
 replaceTextInFile("CHANGELOG.md", "Release Date", date)
 replaceTextInFile("CHANGELOG.md", "Release Version", updatedVersion)
 // commit changes
-executeCommandOnShell("git add .")
-executeCommandOnShell("git commit -m \"$ticketNumber : release $updatedVersion\"")
-executeCommandOnShell("git push origin master")
-
+//executeCommandOnShell("git add .")
+//executeCommandOnShell("git commit -m \"$ticketNumber : release $updatedVersion\"")
+//executeCommandOnShell("git push origin master")
+//
 if (executeCommandOnShell("./gradlew publishPlugins --stacktrace -Pgradle.publish.key=$publishKey -Pgradle.publish.secret=$secretKey") != 0) {
     println("::error::Failed to publish plugin")
     exitProcess(1)
 }
-tagModuleWithLatestVersion(getVersionNameForModule("plugin"))
-backMergeMasterToDevelopment()
+//tagModuleWithLatestVersion(getVersionNameForModule("plugin"))
+//backMergeMasterToDevelopment()
