@@ -33,7 +33,7 @@ executeCommandOnShell("git add .")
 executeCommandOnShell("git commit -m \"$ticketNumber : release $updatedVersion\"")
 executeCommandOnShell("git push origin master")
 
-if (executeCommandOnShell("./gradlew publishPlugins -Pgradle.publish.key=$publishKey -Pgradle.publish.secret=$secretKey") != 0) {
+if (executeCommandOnShell("./gradlew publishPlugins --stacktrace -Pgradle.publish.key=$publishKey -Pgradle.publish.secret=$secretKey") != 0) {
     println("::error::Failed to publish plugin")
     exitProcess(1)
 }
