@@ -13,21 +13,21 @@ val secretKey = args[1]
 val releaseType = args[2]
 val ticketNumber = args[3]
 
-mergeDevBranchToMaster()
+//mergeDevBranchToMaster()
 
 if (executeCommandOnShell("./gradlew assemble --stacktrace") != 0) {
     println("::error::Failed to publish plugin")
     exitProcess(1)
 }
 
-val updatedVersion = updateLibraryVersion(releaseType)
+//val updatedVersion = updateLibraryVersion(releaseType)
 
-val dateFormat = SimpleDateFormat("dd-MM-YYYY")
-dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"))
-val date = dateFormat.format(Date())
+//val dateFormat = SimpleDateFormat("dd-MM-YYYY")
+//dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"))
+//val date = dateFormat.format(Date())
 
-replaceTextInFile("CHANGELOG.md", "Release Date", date)
-replaceTextInFile("CHANGELOG.md", "Release Version", updatedVersion)
+//replaceTextInFile("CHANGELOG.md", "Release Date", date)
+//replaceTextInFile("CHANGELOG.md", "Release Version", updatedVersion)
 // commit changes
 //executeCommandOnShell("git add .")
 //executeCommandOnShell("git commit -m \"$ticketNumber : release $updatedVersion\"")
