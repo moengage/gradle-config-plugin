@@ -55,9 +55,27 @@ dependencies {
 }
 
 signing {
-    val signingKeyId = project.findProperty("signingInMemoryKeyId") as String
-    val signingKey = (project.findProperty("signingInMemoryKey") as String)
-    val signingPassword = project.findProperty("signingInMemoryKeyPassword") as String
+    val rawKeyId = project.findProperty("signingInMemoryKeyId") as String
+    val rawKey = project.findProperty("signingInMemoryKey") as String
+    val rawPassword = project.findProperty("signingInMemoryKeyPassword") as String
+
+    // Temporary diagnostics: prints only shapes of the values, never the values themselves.
+    fun describe(label: String, value: String) = println(
+        "[signing-diag] $label: length=${value.length}, lines=${value.lines().size}, " +
+            "leadingWhitespace=${value.firstOrNull()?.isWhitespace() == true}, " +
+            "trailingWhitespace=${value.lastOrNull()?.isWhitespace() == true}, " +
+            "endsWithNewline=${value.endsWith("\n")}, hasCR=${value.contains('\r')}, " +
+            "literalBackslashN=${value.contains("\\n")}, backslashes=${value.count { it == '\\' }}, " +
+            "nonAscii=${value.count { it.code > 127 }}"
+    )
+    describe("keyId", rawKeyId)
+    describe("key", rawKey)
+    describe("password", rawPassword)
+    println("[signing-diag] key starts with armor header=${rawKey.trimStart().startsWith("-----BEGIN PGP PRIVATE KEY BLOCK-----")}")
+
+    val signingKeyId = rawKeyId.trim()
+    val signingKey = rawKey.replace("\\n", "\n").replace("\r", "")
+    val signingPassword = rawPassword.trimEnd('\n', '\r')
 
     useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
     sign(publishing.publications)
