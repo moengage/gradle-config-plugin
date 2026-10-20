@@ -14,7 +14,7 @@ env:
         
 jobs:
   assemble-verification:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     environment: publishing_gradle_config
     if: ${{ !github.event.pull_request.draft }}
     steps:
